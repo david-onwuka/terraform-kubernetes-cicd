@@ -309,7 +309,7 @@ Verified:
 
 ## Application Running In Browser
 
-![Application Running](screenshots/application-running-browser.png)
+![Application Running](screenshots/application-running-browser.png.png)
 
 
 ## Kubernetes Pods Running
