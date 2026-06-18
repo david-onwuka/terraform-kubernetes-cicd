@@ -66,10 +66,12 @@ jobs:
         uses: actions/checkout@v4
 
 
-      - name: Validate Kubernetes Files
+      - name: Validate Kubernetes Terraform Configuration
+        working-directory: terraform
         run: |
-          echo "Checking Kubernetes configuration"
-          ls kubernetes
+          echo "Checking Kubernetes Terraform configuration"
+          terraform init
+          terraform validate
 
 
 
