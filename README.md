@@ -1,15 +1,18 @@
 # Terraform Kubernetes CI/CD Deployment Platform
-
+ 
 ## Overview
 
 This project demonstrates a complete cloud-native application deployment workflow using modern DevOps practices.
 
-The project combines Infrastructure as Code (Terraform), containerization (Docker), Kubernetes orchestration, and Continuous Integration/Continuous Deployment (CI/CD) automation using GitHub Actions.
+The project implements a containerized web application deployment using Docker, Kubernetes, Terraform, and GitHub Actions CI/CD automation.
 
-The application is packaged into a Docker container, deployed into Kubernetes, and managed through Terraform.
+The application is packaged into a Docker image, deployed into a Kubernetes cluster using Terraform-managed infrastructure, and continuously validated through an automated GitHub Actions pipeline.
 
-This project was built to practice a real-world DevOps workflow where infrastructure, application deployment, and automation are handled through code.
+The infrastructure is defined as code, allowing Kubernetes resources to be created, updated, and managed in a repeatable and version-controlled way.
 
+The CI/CD workflow automatically performs Terraform validation, Docker image build verification, and Kubernetes configuration checks whenever changes are pushed to the repository.
+
+This project represents a practical DevOps workflow covering application containerization, infrastructure automation, orchestration, and continuous integration practices.
 ---
 
 ## Technologies Used
@@ -249,6 +252,27 @@ Workflow file:
 
 ---
 
+---
+
+# CI/CD Pipeline Execution Result
+
+The GitHub Actions workflow was successfully executed after pushing changes to the main branch.
+
+The pipeline automatically performed:
+
+- Terraform formatting validation
+- Terraform initialization
+- Terraform configuration validation
+- Docker image build verification
+- Kubernetes Terraform configuration validation
+
+All workflow jobs completed successfully, confirming that the project configuration can be tested automatically through CI/CD.
+
+## GitHub Actions Successful Run
+
+![GitHub Actions Success](screenshots/github-actions-success.png.png)
+
+---
 # Deployment Process
 
 ## Start Minikube
