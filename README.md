@@ -337,17 +337,17 @@ Browser
 
 ## Minikube Status and Service URL
 
-![Minikube Status](screenshots/01-minikube-status-and-service-url.png)
+![Minikube Status](screenshots/01-minikube-status-and-service-url.png.png)
 
 
 ## Application Running in Browser
 
-![Application Running](screenshots/02-application-running-browser.png)
+![Application Running](screenshots/02-application-running-browser.png.png)
 
 
 ## Kubernetes Pods Running
 
-![Kubernetes Pods](screenshots/03-kubernetes-pods-running.png)
+![Kubernetes Pods](screenshots/03-kubernetes-pods-running.png.png)
 
 
 ---
