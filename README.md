@@ -1,138 +1,61 @@
-# Terraform Kubernetes CI/CD Deployment
+# Terraform Kubernetes CI/CD Deployment Platform
 
 ## Overview
 
-This project demonstrates a complete cloud-native deployment workflow using Terraform, Docker, Kubernetes, Minikube, and CI/CD practices.
+This project demonstrates a complete cloud-native application deployment workflow using modern DevOps practices.
 
-The project shows how a modern DevOps workflow moves an application from source code into a running Kubernetes environment.
+The project combines Infrastructure as Code (Terraform), containerization (Docker), Kubernetes orchestration, and Continuous Integration/Continuous Deployment (CI/CD) automation using GitHub Actions.
 
-Infrastructure is managed using Terraform as Infrastructure as Code (IaC). The application is containerized using Docker, deployed using Kubernetes, and exposed through a Kubernetes Service.
+The application is packaged into a Docker container, deployed into Kubernetes, and managed through Terraform.
 
-This project was developed and tested locally using Minikube to simulate a production-style Kubernetes environment.
+This project was built to practice a real-world DevOps workflow where infrastructure, application deployment, and automation are handled through code.
 
 ---
 
-## Architecture
+## Technologies Used
+
+- Terraform
+- Kubernetes
+- Docker
+- Minikube
+- GitHub Actions
+- Nginx
+- Linux
+- Git
+
+---
+
+## Project Architecture
 
 Developer
-|
-v
-Source Code
-|
-v
+
+↓
+
 GitHub Repository
-|
-v
-GitHub Actions CI/CD
-|
-v
+
+↓
+
+GitHub Actions CI/CD Pipeline
+
+↓
+
 Docker Image Build
-|
-v
-Terraform
-|
-v
-Kubernetes Cluster
-|
-v
-Nginx Container
-|
-v
-Application Running
 
+↓
 
----
+Terraform Infrastructure Management
 
-## Project Objectives
+↓
 
-This project demonstrates:
+Kubernetes Deployment
 
-- Infrastructure as Code using Terraform
-- Containerization using Docker
-- Kubernetes application deployment
-- CI/CD workflow concepts
-- Automated infrastructure management
-- Cloud-native application delivery
+↓
 
+Running Application
 
 ---
 
-# Technologies Used
-
-## Terraform
-
-Terraform is used to manage Kubernetes infrastructure through code.
-
-Terraform creates and manages:
-
-- Kubernetes Namespace
-- Kubernetes Deployment
-- Kubernetes Service
-
-Benefits:
-
-- Repeatable deployments
-- Version-controlled infrastructure
-- Automated resource management
-
-
----
-
-## Kubernetes
-
-Kubernetes manages the application workload.
-
-Features used:
-
-- Pods
-- Deployments
-- Services
-- Namespace isolation
-
-Kubernetes ensures the application remains available and running.
-
-
----
-
-## Docker
-
-Docker packages the application into a container image.
-
-The image contains:
-
-- Nginx web server
-- Application files
-- Runtime configuration
-
-The Docker image is deployed into Kubernetes.
-
-
----
-
-## Minikube
-
-Minikube provides a local Kubernetes cluster for development and testing.
-
-It allows the complete DevOps workflow to be tested locally before cloud deployment.
-
-
----
-
-## GitHub Actions
-
-GitHub Actions provides CI/CD automation.
-
-The workflow can automate:
-
-1. Code changes
-2. Docker image build
-3. Application deployment
-4. Kubernetes updates
-
-
----
-
-# Project Structure
+## Project Structure
 
 terraform-kubernetes-cicd/
 
@@ -149,16 +72,34 @@ terraform-kubernetes-cicd/
 
 │   ├── provider.tf
 
-│   └── variables.tf
+│   ├── variables.tf
+
+│   ├── outputs.tf
+
+│   └── versions.tf
+
+
+├── kubernetes/
+
+
+├── .github/
+
+│   └── workflows/
+
+│       └── deploy.yml
 
 
 ├── screenshots/
 
-│   ├── 01-minikube-status-and-service-url.png
+│   ├── application-running-browser.png
 
-│   ├── 02-application-running-browser.png
+│   ├── kubernetes-pods-running.png
 
-│   └── 03-kubernetes-pods-running.png
+│   ├── minikube-status-and-service-url.png
+
+│   ├── Kubernetes-deployment-details-1.png
+
+│   └── Kubernetes-deployment-details-2.png
 
 
 ├── README.md
@@ -168,119 +109,181 @@ terraform-kubernetes-cicd/
 
 ---
 
+# Application Containerization
+
+The application is packaged using Docker.
+
+The Docker image contains the Nginx web server and the application HTML file.
+
+Docker allows the application to run consistently across different environments.
+
+Build image:
+
+docker build -t terraform-k8s-app:v4 .
+
+
+The image is then loaded into Minikube and deployed through Kubernetes.
+
+---
+
+# Terraform Infrastructure as Code
+
+Terraform is used to provision and manage Kubernetes resources.
+
+Instead of manually creating Kubernetes objects, Terraform defines the infrastructure in configuration files.
+
+Terraform manages:
+
+- Kubernetes Namespace
+- Kubernetes Deployment
+- Kubernetes Service
+
+Benefits:
+
+- Infrastructure is version controlled
+- Deployments are repeatable
+- Changes can be tracked
+- Manual configuration is reduced
+
+---
+
+# Kubernetes Deployment
+
+The application is deployed using Kubernetes Deployment.
+
+The deployment provides:
+
+- 3 replicas
+- RollingUpdate strategy
+- Container health checks
+- Resource management
+
+
+The application runs with multiple pods to improve availability.
+
+Check pods:
+
+kubectl get pods -n devops
+
+
+---
+
+# Kubernetes Production Improvements
+
+## Rolling Update Strategy
+
+The deployment uses RollingUpdate.
+
+This allows application updates without completely stopping the service.
+
+Benefits:
+
+- Reduced downtime
+- Safer deployments
+- Controlled releases
+
+
+## Readiness Probe
+
+The readiness probe checks if the application is ready before receiving traffic.
+
+Kubernetes only sends traffic to healthy containers.
+
+
+## Liveness Probe
+
+The liveness probe checks if the application is still running.
+
+If the container becomes unhealthy, Kubernetes can restart it automatically.
+
+
+## Resource Management
+
+The container has resource settings.
+
+Requests:
+
+CPU: 100m
+
+Memory: 128Mi
+
+
+Limits:
+
+CPU: 250m
+
+Memory: 256Mi
+
+
+This helps Kubernetes manage system resources efficiently.
+
+---
+
+# CI/CD Pipeline
+
+GitHub Actions is used to automate the development workflow.
+
+The workflow runs automatically when changes are pushed.
+
+Pipeline steps:
+
+1. Checkout repository
+
+2. Setup Terraform
+
+3. Terraform format validation
+
+4. Terraform initialization
+
+5. Terraform validation
+
+6. Docker image build test
+
+7. Kubernetes configuration validation
+
+
+Workflow file:
+
+.github/workflows/deploy.yml
+
+
+---
+
 # Deployment Process
 
-## 1. Start Minikube
-
-Command:
+## Start Minikube
 
 minikube start
 
 
-Check status:
+## Build Docker Image
 
-minikube status
-
-
-Expected:
-
-host: Running
-
-kubelet: Running
-
-apiserver: Running
+docker build -t terraform-k8s-app:v4 .
 
 
----
+## Load Image Into Minikube
 
-## 2. Build Docker Image
-
-Navigate to application folder:
-
-cd app
+minikube image load terraform-k8s-app:v4
 
 
-Build image:
-
-docker build -t terraform-k8s-app:v1 .
-
-
-Check image:
-
-docker images
-
-
-Load image into Minikube:
-
-minikube image load terraform-k8s-app:v1
-
-
----
-
-## 3. Terraform Deployment
-
-Navigate to Terraform:
+## Deploy Using Terraform
 
 cd terraform
-
-
-Initialize Terraform:
-
-terraform init
-
-
-Review plan:
-
-terraform plan
-
-
-Deploy:
 
 terraform apply
 
 
-Terraform creates Kubernetes resources automatically.
+## Verify Kubernetes Deployment
+
+kubectl get pods -n devops
 
 
----
+## Check Deployment Details
 
-# Kubernetes Resources Created
-
-## Namespace
-
-The application runs inside:
-
-devops
+kubectl describe deployment nginx-app -n devops
 
 
-This keeps resources isolated.
-
-
----
-
-## Deployment
-
-The Kubernetes Deployment manages application containers.
-
-It provides:
-
-- Running replicas
-- Automatic restart
-- Rolling updates
-
-
----
-
-## Service
-
-The application is exposed using NodePort.
-
-Check service:
-
-kubectl get svc -n devops
-
-
-Access application:
+## Access Application
 
 minikube service nginx-service -n devops --url
 
@@ -289,60 +292,24 @@ minikube service nginx-service -n devops --url
 
 # Verification
 
-Check running pods:
+The deployment was successfully tested.
 
-kubectl get pods -n devops
+Verified:
 
-
-Expected:
-
-READY   STATUS
-
-1/1     Running
-
-1/1     Running
-
-1/1     Running
-
-
-This confirms successful Kubernetes deployment.
-
-
----
-
-# Application Flow
-
-Application Code
-
-↓
-
-Docker Container
-
-↓
-
-Kubernetes Pod
-
-↓
-
-Kubernetes Service
-
-↓
-
-Browser
-
+- Terraform managed Kubernetes resources
+- Docker container running
+- Kubernetes pods running
+- Kubernetes service working
+- Application accessible from browser
+- CI/CD workflow created
 
 ---
 
 # Screenshots
 
-## Minikube Status and Service URL
+## Application Running In Browser
 
-![Minikube Status](screenshots/minikube-status-and-service-url.png.png)
-
-
-## Application Running in Browser
-
-![Application Running](screenshots/application-running-browser.png.png)
+![Application Running](screenshots/application-running-browser.png)
 
 
 ## Kubernetes Pods Running
@@ -350,38 +317,53 @@ Browser
 ![Kubernetes Pods](screenshots/kubernetes-pods-running.png.png)
 
 
+## Minikube Status And Service URL
+
+![Service URL](screenshots/minikube-status-and-service-url.png.png)
+
+
+## Kubernetes Production Deployment Details
+
+![Deployment Details 1](screenshots/Kubernetes-deployment-details-1.png.png)
+
+![Deployment Details 2](screenshots/Kubernetes-deployment-details-2.png.png)
+
+
 ---
 
-# DevOps Concepts Demonstrated
+# Challenges Solved
 
-This project demonstrates:
+During development, real DevOps issues were solved.
 
-- Infrastructure as Code
-- Docker containerization
-- Kubernetes orchestration
-- CI/CD workflow
-- Deployment automation
-- Cloud-native architecture
+Examples:
+
+- Docker image loading into Minikube
+- Kubernetes deployment updates
+- Terraform provider configuration
+- Service accessibility testing
+- Container deployment troubleshooting
 
 
 ---
 
 # Future Improvements
 
-Future improvements:
+Planned improvements:
 
-- Complete GitHub Actions pipeline
-- Push Docker images automatically
 - Deploy to AWS EKS
-- Add monitoring using Prometheus and Grafana
-- Add Kubernetes secrets management
-- Add Terraform remote backend
+- Add Terraform modules
+- Add AWS networking
+- Add Load Balancer
+- Add monitoring with Prometheus and Grafana
+- Add centralized logging
+- Add secrets management
+- Build production cloud deployment
 
 
 ---
 
-# Conclusion
+# Author
 
-This project demonstrates how Terraform, Docker, Kubernetes, and CI/CD practices work together to deliver a modern cloud-native application.
+David Onwuka
 
-Terraform manages infrastructure, Docker packages the application, Kubernetes manages deployment, and automation practices provide a foundation for continuous delivery.
+DevOps / Cloud Engineering Portfolio Project
