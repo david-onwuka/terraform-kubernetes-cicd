@@ -337,7 +337,7 @@ Browser
 
 ## Minikube Status and Service URL
 
-![Minikube Status](screenshots/minikube-status-and-service-url.png.png)
+![Minikube Status](screenshots/minikube-status-and-service.png.png)
 
 
 ## Application Running in Browser
