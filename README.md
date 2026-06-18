@@ -324,9 +324,9 @@ Verified:
 
 ## Kubernetes Production Deployment Details
 
-![Deployment Details 1](screenshots/Kubernetes-deployment-details-1.png.png)
+![Deployment Details 1](screenshots/kubernetes-deployment-details-1.png.png)
 
-![Deployment Details 2](screenshots/Kubernetes-deployment-details-2.png.png)
+![Deployment Details 2](screenshots/kubernetes-deployment-details-2.png.png )
 
 
 ---
